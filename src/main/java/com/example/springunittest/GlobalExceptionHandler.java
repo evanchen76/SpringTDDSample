@@ -52,5 +52,11 @@ public class GlobalExceptionHandler {
         return ApiResponse.internalServerError("Internal server error");
     }
 
+    @ExceptionHandler(UnsupportedOperationException.class)
+    @ResponseStatus(HttpStatus.NOT_IMPLEMENTED)
+    public ApiResponse<Void> handleUnsupportedOperation(UnsupportedOperationException ex) {
+        return ApiResponse.notImplemented(HttpStatus.NOT_IMPLEMENTED.value(), "Operation not supported");
+    }
+
 
 }
