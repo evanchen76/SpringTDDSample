@@ -6,14 +6,17 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService implements IUserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -38,7 +41,11 @@ public class UserService implements IUserService {
         if (!signupValidations.isEmpty()){
             return new SignupResult(null, signupValidations);
         }else{
-            throw new UnsupportedOperationException("Not implemented yet");
+            //新增帳號
+            CreatedUser savedUser = userRepository.insert(
+                    new UserAccount(null, UUID.randomUUID(), userId, passwordEncoder.encode(password))
+            );
+            return new SignupResult(savedUser, null);
         }
     }
 }

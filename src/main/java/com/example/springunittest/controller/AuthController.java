@@ -27,7 +27,7 @@ public class AuthController {
             var uuid = signupResult.createdUser().uuid();
             var userId = signupResult.createdUser().userId();
 
-            return ApiResponse.success(new SignupResponse(uuid, userId));
+            return ApiResponse.success(new SignupResponse(uuid.toString(), userId));
         }else{
             return ApiResponse.fail(HttpStatus.BAD_REQUEST, signupResult.error().toString());
         }

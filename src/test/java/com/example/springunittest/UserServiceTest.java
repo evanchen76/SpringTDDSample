@@ -8,11 +8,14 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.UUID;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -21,14 +24,20 @@ public class UserServiceTest {
     private UserService userService;
 
     @Mock
+    private PasswordEncoder passwordEncoder;
+
+    @Mock
     private UserRepository userRepository;
+
+    private static final UUID USER_UUID = UUID.fromString("ff5230d0-d464-473c-a699-2953eb9c78ad");
+    private final CreatedUser createdUser = new CreatedUser(USER_UUID, USER_ID);
 
     private static final String USER_ID = "testuser";
     private static final String PASSWORD = "password123";
 
     @BeforeEach
     void setUp() {
-        userService = new UserService(userRepository);
+        userService = new UserService(userRepository, passwordEncoder);
     }
 
     @Test
@@ -38,6 +47,17 @@ public class UserServiceTest {
 
         assertFalse(result.isSuccess());
         assertThat(result.error()).hasSize(1);
+    }
+
+    @Test
+    void signup_Success() {
+        when(userRepository.existsByUserId(USER_ID)).thenReturn(false);
+        when(userRepository.insert(any(UserAccount.class))).thenReturn(createdUser);
+
+        var result = userService.signup(USER_ID, PASSWORD);
+
+        assertThat(result.isSuccess()).isTrue();
+        assertThat(result.createdUser()).isEqualTo(createdUser);
     }
 
     @ParameterizedTest

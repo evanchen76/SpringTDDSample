@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -48,7 +49,7 @@ public class AuthControllerTest {
     void signup_WhenSuccessful_ShouldReturnOkResponse() throws Exception {
         SignupRequest request = new SignupRequest(USER_ID, PASSWORD);
         when(userService.signup(request.userId(), request.password())).thenReturn(
-                new SignupResult(new CreatedUser("uuid", "userId"), null)
+                new SignupResult(new CreatedUser(UUID.randomUUID(), "userId"), null)
         );
 
         mockMvc.perform(post("/auth/signup")

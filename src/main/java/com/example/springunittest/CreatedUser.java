@@ -1,4 +1,6 @@
 package com.example.springunittest;
 
-public record CreatedUser(String uuid, String userId) {
+import java.util.UUID;
+
+public record CreatedUser(UUID uuid, String userId) {
 }
