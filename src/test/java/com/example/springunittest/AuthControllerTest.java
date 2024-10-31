@@ -1,6 +1,10 @@
 package com.example.springunittest;
 
 import com.example.springunittest.controller.AuthController;
+import com.example.springunittest.dto.CreatedUser;
+import com.example.springunittest.dto.SignupResult;
+import com.example.springunittest.request.SignupRequest;
+import com.example.springunittest.service.IUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,7 @@
-package com.example.springunittest;
+package com.example.springunittest.repository;
 
+import com.example.springunittest.dto.CreatedUser;
+import com.example.springunittest.dto.UserAccount;
 import org.springframework.stereotype.Component;
 
 @Component

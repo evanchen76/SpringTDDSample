@@ -1,4 +1,4 @@
-package com.example.springunittest;
+package com.example.springunittest.dto;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 

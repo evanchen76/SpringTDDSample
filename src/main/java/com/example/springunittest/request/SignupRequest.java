@@ -1,4 +1,4 @@
-package com.example.springunittest;
+package com.example.springunittest.request;
 
 import jakarta.validation.constraints.NotBlank;
 

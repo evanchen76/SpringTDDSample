@@ -1,7 +1,7 @@
 package com.example.springunittest.controller;
 
-import com.example.springunittest.IUserService;
-import com.example.springunittest.SignupRequest;
+import com.example.springunittest.service.IUserService;
+import com.example.springunittest.request.SignupRequest;
 import com.example.springunittest.response.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
