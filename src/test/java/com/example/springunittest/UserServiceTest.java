@@ -6,23 +6,38 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
     private UserService userService;
 
+    @Mock
+    private UserRepository userRepository;
+
     private static final String USER_ID = "testuser";
     private static final String PASSWORD = "password123";
 
     @BeforeEach
     void setUp() {
-        userService = new UserService();
+        userService = new UserService(userRepository);
+    }
+
+    @Test
+    void signup_UsernameExists() {
+        when(userRepository.existsByUserId(USER_ID)).thenReturn(true);
+        var result = userService.signup(USER_ID, PASSWORD);
+
+        assertFalse(result.isSuccess());
+        assertThat(result.error()).hasSize(1);
     }
 
     @ParameterizedTest

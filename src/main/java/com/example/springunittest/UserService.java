@@ -1,5 +1,7 @@
 package com.example.springunittest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -7,6 +9,13 @@ import java.util.List;
 
 @Service
 public class UserService implements IUserService {
+    private final UserRepository userRepository;
+
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @Override
     public SignupResult signup(String userId, String password) {
         //格式檢查
@@ -18,6 +27,12 @@ public class UserService implements IUserService {
 
         if (password == null || password.length() < 8 || password.length() > 30) {
             signupValidations.add("Password must be between 8 and 30 characters long");
+        }
+
+        //檢查帳號是否存在
+        boolean exists = userRepository.existsByUserId(userId);
+        if (exists) {
+            return new SignupResult(null, List.of("User already exists"));
         }
 
         if (!signupValidations.isEmpty()){
