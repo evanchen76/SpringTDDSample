@@ -64,4 +64,10 @@ class UserRepositoryTest {
         assertThat(exist).isFalse();
     }
 
+    @Test
+    void testFindByUserIdFound() {
+        userRepository.insert(fakeUserAccount);
+        assertThat(userRepository.existsByUserId(USER_ID)).isTrue();
+    }
+
 }
