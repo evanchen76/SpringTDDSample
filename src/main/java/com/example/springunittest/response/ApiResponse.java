@@ -44,4 +44,8 @@ public class ApiResponse<T> extends ResponseEntity<ApiResponse.Body<T>> {
     public static <T> ApiResponse<T> internalServerError(String error) {
         return new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR, false, null, error);
     }
+
+    public static ApiResponse<Void> notImplemented(int value, String operationNotSupported) {
+        return new ApiResponse<>(HttpStatus.NOT_IMPLEMENTED, false, null, operationNotSupported);
+    }
 }
