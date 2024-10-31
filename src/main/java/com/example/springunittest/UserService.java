@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService implements IUserService {
     @Override
-    public SignupResult signup(SignupRequest request) {
+    public SignupResult signup(String userId, String password) {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 }

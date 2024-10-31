@@ -47,7 +47,7 @@ public class AuthControllerTest {
     @Test
     void signup_WhenSuccessful_ShouldReturnOkResponse() throws Exception {
         SignupRequest request = new SignupRequest(USER_ID, PASSWORD);
-        when(userService.signup(request)).thenReturn(
+        when(userService.signup(request.userId(), request.password())).thenReturn(
                 new SignupResult(new CreatedUser("uuid", "userId"), null)
         );
 
@@ -64,7 +64,7 @@ public class AuthControllerTest {
     void signup_WhenServiceReturnsFails_ShouldReturnBadRequest() throws Exception {
         SignupRequest request = new SignupRequest(USER_ID, PASSWORD);
         List<String> validationErrors = List.of("error1", "error2");
-        when(userService.signup(request)).thenReturn(
+        when(userService.signup(request.userId(), request.password())).thenReturn(
                 new SignupResult(null, validationErrors)
         );
         mockMvc.perform(post("/auth/signup")

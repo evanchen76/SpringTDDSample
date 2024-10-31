@@ -22,7 +22,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ApiResponse<SignupResponse> signup(@Valid @RequestBody SignupRequest request) {
-        var signupResult = userService.signup(request);
+        var signupResult = userService.signup(request.userId(), request.password());
         if (signupResult.isSuccess()) {
             var uuid = signupResult.createdUser().uuid();
             var userId = signupResult.createdUser().userId();
