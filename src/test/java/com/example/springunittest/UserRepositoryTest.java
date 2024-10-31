@@ -58,4 +58,10 @@ class UserRepositoryTest {
                 });
     }
 
+    @Test
+    void testFindByUserIdNotFound() {
+        boolean exist = userRepository.existsByUserId("nonexistent");
+        assertThat(exist).isFalse();
+    }
+
 }

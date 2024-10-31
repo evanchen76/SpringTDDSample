@@ -16,7 +16,8 @@ public class UserRepository {
     }
 
     public Boolean existsByUserId(String userId) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        String sql = "SELECT EXISTS(SELECT 1 FROM user_account WHERE user_id = ?)";
+        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(sql, Boolean.class, userId));
     }
 
     public CreatedUser insert(UserAccount user) {
