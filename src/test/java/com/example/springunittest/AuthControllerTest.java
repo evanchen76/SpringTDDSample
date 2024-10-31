@@ -19,6 +19,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(SecurityConfig.class)
 public class AuthControllerTest {
 
+    public static final String USER_ID = "userId";
+    public static final String PASSWORD = "password";
     @Autowired
     private MockMvc mockMvc;
 
@@ -42,7 +44,7 @@ public class AuthControllerTest {
 
     @Test
     void signup_WhenSuccessful_ShouldReturnOkResponse() throws Exception {
-        SignupRequest request = new SignupRequest("userId", "password");
+        SignupRequest request = new SignupRequest(USER_ID, PASSWORD);
         when(userService.signup(request)).thenReturn(
                 new SignupResult(new CreatedUser("uuid", "userId"))
         );
